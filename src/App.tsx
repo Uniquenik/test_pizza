@@ -1,26 +1,81 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { FC, memo, useEffect, useReducer, useState } from 'react';
+import {
+  AppShell as MantineAppShell,
+  Button,
+  Header,
+} from "@mantine/core";
+import { Navbar } from '@mantine/core';
+import { Link, Route, Routes, BrowserRouter as Router } from "react-router-dom";
+import {Shop} from "./components/shop/shop";
 
-function App() {
+
+const AppShell: FC = ({ children }) => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <MantineAppShell
+          padding="md"
+          navbar={
+            <Navbar padding="xs" width={ { base: 300 } }>
+              <Navbar.Section grow mt="lg">
+                {/*<Scrollbars>*/ }
+
+                {/*</Scrollbars>*/ }
+              </Navbar.Section>
+            </Navbar>
+          }
+          header={
+            <Header height={ 60 } padding="xs">
+              <Link to="/cart">
+                <Button variant="gradient" gradient={ { from: 'gray', to: 'blue' } }>Корзина</Button>
+              </Link>
+              <Link to="/shop">
+                <Button variant="gradient" gradient={ { from: 'indigo', to: 'gray' } }>Товары</Button>
+              </Link>
+            </Header>
+          }
+          styles={ (theme) => ({
+            main: { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0] },
+          }) }
+      >
+        { children }
+      </MantineAppShell>
   );
+};
+
+
+export const Home = () => {
+
+  return (
+      <>
+
+      </>
+  );
+};
+
+
+export const Cart = () => {
+
+  return (
+      <>
+
+      </>
+  );
+};
+
+
+const App = () => {
+
+  return (
+      <Router>
+        <AppShell>
+          <Routes>
+            <Route path="/" element={ <Home/> }/>
+            <Route path="shop" element={ <Shop/> }/>
+            <Route path="cart" element={ <Cart/> }/>
+          </Routes>
+        </AppShell>
+      </Router>
+  );
+
 }
 
 export default App;
