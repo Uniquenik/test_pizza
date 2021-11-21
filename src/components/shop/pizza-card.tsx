@@ -2,7 +2,10 @@ import React, {memo} from "react";
 import {Badge, Button, Card, Group, Image, Text, useMantineTheme} from "@mantine/core";
 import {Pizza} from "../data-types";
 
-export const PizzaCard = memo((props: Pizza) => {
+export const PizzaCard = memo((props: {
+    pizza:Pizza,
+    onAddCart: (Pizza:Pizza) => void
+}) => {
 
     const theme = useMantineTheme();
 
@@ -11,20 +14,22 @@ export const PizzaCard = memo((props: Pizza) => {
         : theme.colors.gray[7];
 
     return (
-        <Card shadow="sm" padding="lg">
-            <Card.Section>
-                <Image src={ props.imageLink } height={ 160 } alt={ props.name } withPlaceholder/>
+        <Card shadow="sm" padding="lg" style={{height: "100%", marginBottom:theme.spacing.sm}}>
+            <Card.Section style={{marginBottom:theme.spacing.sm}}>
+                <Image src={ props.pizza.imageLink } height={ 150 } fit={"contain"} alt={ props.pizza.name } withPlaceholder/>
             </Card.Section>
-            <Group position="apart" style={ { marginBottom: 5, marginTop: theme.spacing.sm } }>
-                <Text weight={ 500 }>{ props.name }</Text>
-                <Badge color="pink" variant="light">
+            <Group position="apart">
+                <Text weight={ 500 }>{ props.pizza.name }</Text>
+            </Group>
+            <Group>
+                <Badge color="red" variant="light">
                     Pizza
                 </Badge>
             </Group>
-            <Text size="sm" style={ { color: secondaryColor, lineHeight: 1.5 } }>
-                PRICE: ${ props.price }
+            <Text size="sm" style={ { marginTop:theme.spacing.sm, color: secondaryColor, lineHeight: 1.5 } }>
+                PRICE: ${  props.pizza.price }
             </Text>
-            <Button variant="light" color="blue" fullWidth style={ { marginTop: 14, width: '8em' } }>
+            <Button variant="filled" color="red" fullWidth onClick={() => props.onAddCart(props.pizza)}>
                 Add to cart
             </Button>
         </Card>

@@ -1,45 +1,11 @@
 import React, { FC, memo, useEffect, useReducer, useState } from 'react';
 import {
-  AppShell as MantineAppShell,
-  Button,
-  Header,
+    ColorScheme, ColorSchemeProvider, MantineProvider
 } from "@mantine/core";
 import { Navbar } from '@mantine/core';
 import { Link, Route, Routes, BrowserRouter as Router } from "react-router-dom";
 import {Shop} from "./components/shop/shop";
-
-
-const AppShell: FC = ({ children }) => {
-  return (
-      <MantineAppShell
-          padding="md"
-          navbar={
-            <Navbar padding="xs" width={ { base: 300 } }>
-              <Navbar.Section grow mt="lg">
-                {/*<Scrollbars>*/ }
-
-                {/*</Scrollbars>*/ }
-              </Navbar.Section>
-            </Navbar>
-          }
-          header={
-            <Header height={ 60 } padding="xs">
-              <Link to="/cart">
-                <Button variant="gradient" gradient={ { from: 'gray', to: 'blue' } }>Корзина</Button>
-              </Link>
-              <Link to="/shop">
-                <Button variant="gradient" gradient={ { from: 'indigo', to: 'gray' } }>Товары</Button>
-              </Link>
-            </Header>
-          }
-          styles={ (theme) => ({
-            main: { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0] },
-          }) }
-      >
-        { children }
-      </MantineAppShell>
-  );
-};
+import {MainLayout} from "./mainLayout/main-layout";
 
 
 export const Home = () => {
@@ -64,16 +30,38 @@ export const Cart = () => {
 
 const App = () => {
 
-  return (
-      <Router>
-        <AppShell>
-          <Routes>
-            <Route path="/" element={ <Home/> }/>
-            <Route path="shop" element={ <Shop/> }/>
-            <Route path="cart" element={ <Cart/> }/>
-          </Routes>
-        </AppShell>
-      </Router>
+    const [colorScheme, setColorScheme] = useState('light');
+    const toggleColorScheme = (value?: ColorScheme) => {
+        console.log(colorScheme)
+        setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'))
+    }
+
+    return (
+        // @ts-ignore
+        <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+            <MantineProvider
+                theme={{
+                    fontFamily: 'Open Sans, sans serif',
+                    spacing: { xs: 15, sm: 20, md: 25, lg: 30, xl: 40 },
+                    breakpoints: {
+                        xs: 500,
+                        sm: 800,
+                        md: 1000,
+                        lg: 1200,
+                        xl: 1950,
+                    },
+                }}>
+                <Router>
+                    <MainLayout>
+                        <Routes>
+                            <Route path="/" element={ <Home/> }/>
+                            <Route path="shop" element={ <Shop/> }/>
+                            <Route path="cart" element={ <Cart/> }/>
+                          </Routes>
+                    </MainLayout>
+                </Router>
+            </MantineProvider>
+        </ColorSchemeProvider>
   );
 
 }

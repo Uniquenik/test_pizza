@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Container, LoadingOverlay, SimpleGrid} from "@mantine/core";
+import {Container, Grid, LoadingOverlay, Col} from "@mantine/core";
 import axios from "axios";
 import {PizzaCard} from "./pizza-card";
 import {usePizzaOrders} from "../../hooks/usePizzaOrder";
@@ -9,15 +9,7 @@ export const Shop = () => {
     // const [ pizza, setPizza ] = useState<Pizza[]>([]);
 
     const {fetching,
-        pizza} = usePizzaOrders()
-
-    const API_URL = "https://private-anon-ed37853152-pizzaapp.apiary-mock.com/";
-
-    const baseConfig = {
-        baseURL: API_URL,
-    };
-
-    const $api = axios.create(baseConfig);
+        pizza, addPizzaToCart} = usePizzaOrders()
 
     // useEffect(() => {
     //
@@ -59,12 +51,15 @@ export const Shop = () => {
     return (
         <Container>
             <LoadingOverlay visible={ fetching }/>
-            <SimpleGrid cols={ 3 } spacing="xl">
+            <Grid gutter="sm">
                 {
-                    pizza.map(pizza => <PizzaCard name={ pizza.name } id={ pizza.id } price={ pizza.price }
-                                                  imageLink={ pizza.imageLink } key={ pizza.id }/>)
+                    pizza.map(pizza =>
+                        <Col key={pizza.id} span={12} md={6} lg={3}>
+                            <PizzaCard onAddCart={addPizzaToCart} pizza={pizza}/>
+                        </Col>
+                            )
                 }
-            </SimpleGrid>
+            </Grid>
         </Container>
     );
 };
