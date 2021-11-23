@@ -2,7 +2,7 @@ import {createContext, useContext, useEffect, useReducer, useState} from "react"
 import axios from "axios";
 import {Pizza} from "../components/data-types";
 
-interface PizzaCartState {
+export interface PizzaCartState {
     cart: Array<PizzaItem>,
     totalPrice: number,
 }
@@ -70,8 +70,6 @@ export const usePizzaOrders = () => {
     const cartReducer = (state: PizzaCartState, action: Action):PizzaCartState => {
         switch (action.type) {
             case PizzaCartActionTypes.ADD_PIZZA_TO_CART:
-                console.log(action.payload);
-                console.log(state);
                 const pizzaExistInCart = state.cart.find(pizzaItem => pizzaItem.pizza.id === action.payload.id);
                 console.log(pizzaExistInCart)
                 if (!pizzaExistInCart) {
