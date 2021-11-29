@@ -6,7 +6,6 @@ export const PizzaCard = memo((props: {
     pizza:Pizza,
     onAddCart: (Pizza:Pizza) => void
 }) => {
-
     const theme = useMantineTheme();
 
     const secondaryColor = theme.colorScheme === 'dark'

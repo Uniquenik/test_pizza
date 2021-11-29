@@ -1,16 +1,8 @@
 import {createContext, useContext, useEffect, useReducer, useState} from "react";
 import axios from "axios";
-import {Pizza} from "../components/data-types";
+import {Pizza, PizzaCartState} from "../components/data-types";
 
-export interface PizzaCartState {
-    cart: Array<PizzaItem>,
-    totalPrice: number,
-}
 
-interface PizzaItem {
-    pizza: Pizza,
-    amount: number
-}
 
 export const PizzaCartActionTypes = {
     ADD_PIZZA_TO_CART: 'ADD_PIZZA_TO_CART',

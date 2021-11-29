@@ -1,13 +1,14 @@
 import React, {FC} from "react";
-import {AppShell, Navbar, Text, Burger, Header, Button, Drawer, useMantineColorScheme} from "@mantine/core";
+import {AppShell, Navbar, Burger, Header, Button, Drawer, useMantineColorScheme} from "@mantine/core";
 import {Link} from "react-router-dom";
 import {useOpenCart} from "../hooks/useOpenCart";
+import {Cart} from "../components/cart/cart";
 
 export const MainLayout: FC = ({ children }) => {
     const {isOpenCart, SetOpenCart, GetValues} = useOpenCart()
 
     const { colorScheme, toggleColorScheme } = useMantineColorScheme();
-    const dark = colorScheme === 'dark';
+    //const dark = colorScheme === 'dark';
 
     return (
             <AppShell
@@ -22,7 +23,7 @@ export const MainLayout: FC = ({ children }) => {
                         hidden={!isOpenCart}
                         width={{sm: 300, lg: 400}}
                     >
-                        <Text>Application navbar</Text>
+                        <Cart/>
                     </Navbar>
                 }
                 header={

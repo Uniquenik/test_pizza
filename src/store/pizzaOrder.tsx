@@ -1,6 +1,5 @@
-import {PizzaCartState} from "../hooks/usePizzaOrder";
 import {makeAutoObservable} from "mobx";
-import {Pizza} from "../components/data-types";
+import {Pizza, PizzaCartState} from "../components/data-types";
 import {useEffect} from "react";
 
 const PizzaCartInitState: PizzaCartState = {
@@ -9,10 +8,6 @@ const PizzaCartInitState: PizzaCartState = {
 }
 
 const PizzaOrder = (cartInfo:PizzaCartState = PizzaCartInitState) => {
-    useEffect(() => {
-
-
-    },[])
     return makeAutoObservable({
         cartInfo,
         AddPizzaToCart(pizza:Pizza) {
