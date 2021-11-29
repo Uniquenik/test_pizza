@@ -1,6 +1,5 @@
 import {makeAutoObservable} from "mobx";
 import {Pizza, PizzaCartState} from "../components/data-types";
-import {useEffect} from "react";
 
 const PizzaCartInitState: PizzaCartState = {
     cart: [],
