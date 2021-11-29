@@ -2,6 +2,7 @@ import {$api} from "./api";
 import {Pizza} from "../components/data-types";
 import {makeAutoObservable, runInAction} from "mobx";
 
+
 export async function getPizzas():Promise<Pizza[]> {
     let pizzas: Pizza[] = []
 
