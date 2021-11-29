@@ -51,7 +51,6 @@ const ProductsList = (pizzaList:Pizza[] = []) => {
         getPizzas()
             .then((resp) => {
                 store.pizzaList = resp
-                console.log(store.pizzaList)
                 store.isFetching = false
             })
             .catch((err) => console.log(err))

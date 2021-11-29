@@ -1,20 +1,34 @@
 import {observer} from "mobx-react-lite";
 import {storeCart} from "../../store/productsCart";
-import {LoadingOverlay} from "@mantine/core";
+import {Card, Text, LoadingOverlay, Center, ActionIcon, Title} from "@mantine/core";
 import React from "react";
+import {CartCard} from "./cart-card";
+import {TrashIcon} from "@radix-ui/react-icons";
 
 export const Cart = observer(() => {
-    const {isFetching, cartItemsProducts, totalPrice} = storeCart
+    const {isFetching, cartItemsProducts, totalPrice, addInCart, deleteInCart, clearCart} = storeCart
     console.log(cartItemsProducts)
     return (
         <div>
             <LoadingOverlay visible={isFetching}/>
+            <Center> <Title order={2}> Cart</Title></Center>
+            <Card shadow={"xs"} padding={"sm"}>
             {cartItemsProducts &&
-                cartItemsProducts.map((item) =>
-                    <div> {item.pizza.name}, {item.amount} </div>
-                )
+            cartItemsProducts.map((item) =>
+                <CartCard pizza={item.pizza}
+                          amount={item.amount}
+                          onAdd={addInCart}
+                          onRemove={deleteInCart}
+                />
+            )
             }
-            <div>{totalPrice}</div>
+            </Card>
+            <Card padding="xs">
+                <ActionIcon onClick={clearCart}>
+                    <TrashIcon/>
+                </ActionIcon>
+                <div>{totalPrice}</div>
+            </Card>
         </div>
 
     )

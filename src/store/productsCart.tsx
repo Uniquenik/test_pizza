@@ -18,64 +18,71 @@ interface productItems {
 }
 
 const cartItemsProductsInitState:productItems[] =
-    new Array({
-        pizza: {id:0, name: "null", price: 0, imageLink: ""},
-        amount: 0
-    })
+    new Array()
 
 
 const ProductsCart = (cartItems: Array<cardItemsID> = cartItemsIdInitState) => {
-    const {pizzaById} = storeProducts
+    //const {pizzaById} = storeProducts
     const store = {
         isFetching: true,
-        cartItemsId: cartItems,
+        //cartItemsId: cartItems,
         cartItemsProducts: cartItemsProductsInitState,
         totalPrice: 0,
         addInCart (pizza: Pizza) {
-            let indexInCart = store.cartItemsId.findIndex(item => item.id === pizza.id);
+            let indexInCart = store.cartItemsProducts.findIndex(item => item.pizza.id === pizza.id);
             if (indexInCart === -1){
                 store.cartItemsProducts.push({pizza:pizza, amount:1})
-                store.cartItemsId.push({id:pizza.id,amount:1})
+                //store.cartItemsId.push({id:pizza.id,amount:1})
             }
             else {
                 store.cartItemsProducts[indexInCart] = {
                     pizza:pizza,
-                    amount: store.cartItemsId[indexInCart].amount + 1
+                    amount: store.cartItemsProducts[indexInCart].amount + 1
                 }
-                store.cartItemsId[indexInCart] = {
+                /*store.cartItemsId[indexInCart] = {
                     id: pizza.id,
                     amount: store.cartItemsId[indexInCart].amount + 1
-                }
+                }*/
             }
-            localStorage.setItem("cart", JSON.stringify(store.cartItemsId))
+            store.totalPrice += pizza.price
+            localStorage.setItem("cart", JSON.stringify(store.cartItemsProducts))
         },
         deleteInCart (pizza: Pizza) {
-
-
+            console.log(store.cartItemsProducts)
+            let indexInCart = store.cartItemsProducts.findIndex(item => item.pizza.id === pizza.id);
+            if (indexInCart !== -1) {
+                if (store.cartItemsProducts[indexInCart].amount == 1) {
+                    store.cartItemsProducts.splice(indexInCart, 1)
+                }
+                else {
+                    store.cartItemsProducts[indexInCart].amount-=1
+                }
+                store.totalPrice -= pizza.price
+            }
         },
         clearCart() {
-
+            store.cartItemsProducts = []
+            store.totalPrice = 0
+            localStorage.setItem("cart", "")
         }
     }
 
     runInAction(() => {
         const itemsId = localStorage.getItem("cart")
-        console.log(store.cartItemsId)
         if (itemsId) {
-            store.cartItemsId = JSON.parse(itemsId)
-            console.log(store.cartItemsId)
-            store.cartItemsId.forEach(el => {
-                const pizza = pizzaById(el.id)
+            store.cartItemsProducts = JSON.parse(itemsId)
+            /*store.cartItemsProducts.forEach(el => {
+                const pizza = pizzaById(el.pizza.id)
                 console.log(pizza)
                 if (pizza) {
                     store.cartItemsProducts.push({pizza: pizza, amount: el.amount})
                 }
-            })
+            })*/
             store.cartItemsProducts.forEach((el) => {
-                store.totalPrice+= el.pizza.price * el.amount
+                store.totalPrice += el.pizza.price * el.amount
             })
         }
-        console.log(store.cartItemsProducts)
+        //console.log(store.cartItemsProducts)
         store.isFetching = false
     })
     return makeAutoObservable(store)

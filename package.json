@@ -9,6 +9,7 @@
     "@mantine/hooks": "^3.2.1",
     "@mantine/modals": "^3.2.1",
     "@mantine/notifications": "^3.2.1",
+    "@radix-ui/react-icons": "^1.0.3",
     "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",

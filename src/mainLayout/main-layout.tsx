@@ -13,22 +13,26 @@ export const MainLayout: FC = ({ children }) => {
     return (
             <AppShell
                 padding="xs"
+                fixed = {isOpenCart}
+                zIndex={10}
+                //navbarOffsetBreakpoint = "xs"
                 // fixed prop on AppShell will be automatically added to Header and Navbar
                 navbar={
                     <Navbar
-                        padding="md"
+                        zIndex = {50}
+                        padding= "md"
+                        fixed = {true}
                         // Breakpoint at which navbar will be hidden if hidden prop is true
                         hiddenBreakpoint={"xl"}
                         // Hides navbar when viewport size is less than value specified in hiddenBreakpoint
                         hidden={!isOpenCart}
-                        width={{sm: 300, lg: 400}}
+                        width={{sm: 400, lg: 500}}
                     >
                         <Cart/>
                     </Navbar>
                 }
                 header={
-                    <div>
-                        <Header height={ 60 } padding="xs">
+                        <Header height={ 60 } zIndex = {1000} padding="xs">
                             <Burger
                             opened={isOpenCart}
                             onClick={() => SetOpenCart(!isOpenCart)}
@@ -48,7 +52,6 @@ export const MainLayout: FC = ({ children }) => {
                                 Change theme
                             </Button>
                         </Header>
-                    </div>
                 }
                 styles={ (theme) => ({
                     main: { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0] },
