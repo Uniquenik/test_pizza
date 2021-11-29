@@ -51,6 +51,7 @@ const ProductsCart = (cartItems: Array<cardItemsID> = cartItemsIdInitState) => {
         },
         deleteInCart (pizza: Pizza) {
 
+
         },
         clearCart() {
 
