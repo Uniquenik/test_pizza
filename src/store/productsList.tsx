@@ -1,9 +1,9 @@
 import {$api} from "./api";
 import {Pizza} from "../components/data-types";
-import {makeAutoObservable, runInAction} from "mobx";
+import {action, makeAutoObservable, runInAction} from "mobx";
 
 
-export async function getPizzas():Promise<Pizza[]> {
+export async function getPizzas(address: string):Promise<Pizza[]> {
     let pizzas: Pizza[] = []
 
     async function fetchPizzaImages() {
@@ -11,7 +11,7 @@ export async function getPizzas():Promise<Pizza[]> {
         return response.data.image;
     }
 
-    async function fetchPizza() {
+    async function fetchPizza(address: string) {
         const response = await $api.get("restaurants/1/menu?category=Pizza");
         //@ts-ignore
         pizzas = response.data.map(pizza => {
@@ -27,10 +27,9 @@ export async function getPizzas():Promise<Pizza[]> {
                 imageLink: await fetchPizzaImages()
             }
         }
-        console.log(pizzas)
         return pizzas;
     }
-    return await fetchPizza()
+    return await fetchPizza(address)
 }
 
 const ProductsList = (pizzaList:Pizza[] = []) => {
@@ -38,6 +37,11 @@ const ProductsList = (pizzaList:Pizza[] = []) => {
     const store = {
         isFetching: true,
         pizzaList: pizzaList,
+        applyFilter(address: string){
+            action(() => {
+
+            })
+        },
         pizzaById (id:number) {
             let pizzaExistInList = store.pizzaList.findIndex(pizzaItem => pizzaItem.id === id);
             if (pizzaExistInList !== -1) {
@@ -47,8 +51,10 @@ const ProductsList = (pizzaList:Pizza[] = []) => {
         }
     }
 
+
+
     runInAction(() => {
-        getPizzas()
+        getPizzas("")
             .then((resp) => {
                 store.pizzaList = resp
                 store.isFetching = false

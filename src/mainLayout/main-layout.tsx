@@ -26,7 +26,7 @@ export const MainLayout: FC = ({ children }) => {
                         hiddenBreakpoint={"xl"}
                         // Hides navbar when viewport size is less than value specified in hiddenBreakpoint
                         hidden={!isOpenCart}
-                        width={{sm: 400, lg: 500}}
+                        width={{lg: 450}}
                     >
                         <Cart/>
                     </Navbar>

@@ -1,9 +1,19 @@
 import {observer} from "mobx-react-lite";
 import {storeCart} from "../../store/productsCart";
-import {Card, Text, LoadingOverlay, Center, ActionIcon, Title} from "@mantine/core";
+import {Card, Text, LoadingOverlay, Center, ActionIcon, Title, Table, Group} from "@mantine/core";
 import React from "react";
 import {CartCard} from "./cart-card";
 import {TrashIcon} from "@radix-ui/react-icons";
+
+const ths = (
+    <tr>
+        <th></th>
+        <th>Name</th>
+        <th>Amount</th>
+        <th>Price</th>
+    </tr>
+);
+
 
 export const Cart = observer(() => {
     const {isFetching, cartItemsProducts, totalPrice, addInCart, deleteInCart, clearCart} = storeCart
@@ -12,23 +22,27 @@ export const Cart = observer(() => {
         <div>
             <LoadingOverlay visible={isFetching}/>
             <Center> <Title order={2}> Cart</Title></Center>
-            <Card shadow={"xs"} padding={"sm"}>
-            {cartItemsProducts &&
-            cartItemsProducts.map((item) =>
-                <CartCard pizza={item.pizza}
-                          amount={item.amount}
-                          onAdd={addInCart}
-                          onRemove={deleteInCart}
-                />
-            )
-            }
-            </Card>
-            <Card padding="xs">
-                <ActionIcon onClick={clearCart}>
+            <Table striped>
+                <thead>{ths}</thead>
+                <tbody>
+                {cartItemsProducts &&
+                cartItemsProducts.map((item) =>
+                    <CartCard key = {item.pizza.id}
+                              pizza={item.pizza}
+                              amount={item.amount}
+                              onAdd={addInCart}
+                              onRemove={deleteInCart}
+                    />
+                )
+                }
+                </tbody>
+            </Table>
+            <Group position={"apart"}>
+                <ActionIcon size={"xl"} onClick={clearCart}>
                     <TrashIcon/>
                 </ActionIcon>
-                <div>{totalPrice}</div>
-            </Card>
+                <Text size={"xl"}>Price:{totalPrice}</Text>
+            </Group>
         </div>
 
     )

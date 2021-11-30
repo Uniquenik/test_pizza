@@ -16,7 +16,7 @@ export const Shop = observer(() => {
             <Grid gutter="sm">
                 {pizzaList && (
                     pizzaList.map((pizza: Pizza) =>
-                        <Col key={pizza.id} span={12} md={6} lg={4}>
+                        <Col key={pizza.id} span={12} xs={6}  md={6} lg={4} xl={3}>
                             <PizzaCard pizza={pizza} onAddCart={addInCart}/>
                         </Col>
                     ))

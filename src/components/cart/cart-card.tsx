@@ -9,17 +9,21 @@ export const CartCard = (props:{
     onRemove: (pizza:Pizza) => void
 }) => {
   return (
-      <Group spacing={"xs"} position={"apart"}>
-          <Image radius={"md"} src={props.pizza.imageLink} height={50} width={50} fit={"contain"} alt={"pizza"}/>
-          <Text>{props.pizza.name} </Text>
-          <ActionIcon onClick={()=> {props.onRemove(props.pizza)}}>
-              <MinusIcon/>
-          </ActionIcon>
-          <Text>{props.amount} </Text>
-          <ActionIcon onClick={()=> {props.onAdd(props.pizza)}}>
-              <PlusIcon/>
-          </ActionIcon>
-          <Text>{props.pizza.price * props.amount} </Text>
-      </Group>
+      <tr>
+          <td><Image radius={"md"} src={props.pizza.imageLink} height={50} width={50} fit={"contain"} alt={"pizza"}/></td>
+          <td><Text>{props.pizza.name} </Text></td>
+          <td>
+              <Group spacing={"xs"}>
+                  <ActionIcon size={"xs"} variant="filled" radius={"md"} onClick={()=> {props.onRemove(props.pizza)}}>
+                  <MinusIcon/>
+                  </ActionIcon>
+                  <Text>{props.amount} </Text>
+                  <ActionIcon size={"xs"} variant="filled" radius={"md"} onClick={()=> {props.onAdd(props.pizza)}}>
+                      <PlusIcon/>
+                  </ActionIcon>
+              </Group>
+          </td>
+          <td><Text>{props.pizza.price * props.amount} </Text></td>
+      </tr>
   )
 }
