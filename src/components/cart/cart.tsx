@@ -1,6 +1,6 @@
 import {observer} from "mobx-react-lite";
 import {storeCart} from "../../store/productsCart";
-import {Card, Text, LoadingOverlay, Center, ActionIcon, Title, Table, Group} from "@mantine/core";
+import {Card, Text, LoadingOverlay, Center, ActionIcon, Title, Table, Group, Space} from "@mantine/core";
 import React from "react";
 import {CartCard} from "./cart-card";
 import {TrashIcon} from "@radix-ui/react-icons";
@@ -21,7 +21,11 @@ export const Cart = observer(() => {
     return (
         <div>
             <LoadingOverlay visible={isFetching}/>
-            <Center> <Title order={2}> Cart</Title></Center>
+            <Space h="md" />
+            <Center>
+                <Title order={2}> Cart </Title>
+            </Center>
+            <Space h="md" />
             <Table striped>
                 <thead>{ths}</thead>
                 <tbody>

@@ -50,7 +50,8 @@ const RecipesList = () => {
         getRecipes("filter.php?a=american")
             .then((resp) => {
                     store.recipes = resp
-                    store.total = Math.floor(store.recipes.length/inPage)
+                    let totalPage =  Math.floor(store.recipes.length/inPage)
+                    store.total = totalPage
                     store.currRecipes = resp.slice(0,inPage)
                     store.isFetching = false
                 }

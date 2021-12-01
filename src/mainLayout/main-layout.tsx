@@ -1,14 +1,29 @@
-import React, {FC} from "react";
-import {AppShell, Navbar, Burger, Header, Button, Drawer, useMantineColorScheme} from "@mantine/core";
+import React, {FC, useState} from "react";
+import {
+    AppShell,
+    Navbar,
+    Burger,
+    Header,
+    SegmentedControl,
+    ActionIcon,
+    useMantineColorScheme,
+    Group,
+    Divider,
+    Text,
+    Tabs, UnstyledButton
+} from "@mantine/core";
 import {Link} from "react-router-dom";
 import {useOpenCart} from "../hooks/useOpenCart";
 import {Cart} from "../components/cart/cart";
+import {ArchiveIcon, SunIcon, MoonIcon} from "@radix-ui/react-icons";
 
 export const MainLayout: FC = ({ children }) => {
     const {isOpenCart, SetOpenCart, GetValues} = useOpenCart()
 
     const { colorScheme, toggleColorScheme } = useMantineColorScheme();
-    //const dark = colorScheme === 'dark';
+    const dark = colorScheme === 'dark';
+
+    const [typeOrder, setTypeOrder] = useState("delivery")
 
     return (
             <AppShell
@@ -28,29 +43,65 @@ export const MainLayout: FC = ({ children }) => {
                         hidden={!isOpenCart}
                         width={{lg: 450}}
                     >
-                        <Cart/>
+                        <Navbar.Section>
+                            <SegmentedControl
+                                fullWidth
+                                size={"md"}
+                                value={typeOrder}
+                                onChange={setTypeOrder}
+                                data={[
+                                    { label: 'Delivery', value: 'delivery' },
+                                    { label: 'In restaurant', value: 'restaurant' },
+                                    { label: 'Pre-order in restaurant', value: 'pre-order' },
+                                ]}
+                            />
+                        </Navbar.Section>
+                        <Navbar.Section>
+                            <Cart/>
+                        </Navbar.Section>
                     </Navbar>
                 }
                 header={
                         <Header height={ 60 } zIndex = {1000} padding="xs">
-                            <Burger
-                            opened={isOpenCart}
-                            onClick={() => SetOpenCart(!isOpenCart)}
-                            size="sm"
-                            color={"gray"}
-                            mr="xl"
-                            />
-                            <Link to="/shop">
-                                <Button variant="gradient" gradient={ { from: 'indigo', to: 'gray' } }>Товары</Button>
-                            </Link>
-                            <Button onClick = {GetValues}>sas</Button>
-                            <Button
-                                variant="outline"
-                                onClick={() => toggleColorScheme()}
-                                title="Toggle color scheme"
-                            >
-                                Change theme
-                            </Button>
+                            <Group spacing={"xs"}>
+                                <Burger
+                                opened={isOpenCart}
+                                onClick={() => SetOpenCart(!isOpenCart)}
+                                size="sm"
+                                color={"gray"}
+                                mr="xs"
+                                />
+                                <ActionIcon
+                                    size={"lg"}
+                                    variant="outline"
+                                    onClick={() => toggleColorScheme()}
+                                    title="Toggle color scheme"
+                                >
+                                    {dark ? (
+                                        <SunIcon/>
+                                    ): (
+                                        <MoonIcon/>
+                                    )}
+                                </ActionIcon>
+                                <Divider orientation="vertical" mx="xs" />
+                                <Group>
+                                    <Link to={"/"}>
+                                        <UnstyledButton>
+                                            <Text>Home</Text>
+                                        </UnstyledButton>
+                                    </Link>
+                                    <Link to={"/shop"}>
+                                        <UnstyledButton>
+                                                <Text>Shop</Text>
+                                        </UnstyledButton>
+                                    </Link>
+                                    <Link to={"/"}>
+                                        <UnstyledButton>
+                                            <Text>Random</Text>
+                                        </UnstyledButton>
+                                    </Link>
+                                </Group>
+                            </Group>
                         </Header>
                 }
                 styles={ (theme) => ({

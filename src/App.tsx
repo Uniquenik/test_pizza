@@ -6,6 +6,7 @@ import { Navbar } from '@mantine/core';
 import { Link, Route, Routes, BrowserRouter as Router } from "react-router-dom";
 import {Shop} from "./components/shop/shop";
 import {MainLayout} from "./mainLayout/main-layout";
+import {useColorScheme} from "@mantine/hooks";
 
 
 export const Home = () => {
@@ -29,26 +30,26 @@ export const Cart = () => {
 
 
 const App = () => {
-
-    const [colorScheme, setColorScheme] = useState('light');
+    const preferredColorScheme = useColorScheme();
+    const [colorScheme, setColorScheme] = useState(preferredColorScheme);
     const toggleColorScheme = (value?: ColorScheme) => {
         console.log(colorScheme)
         setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'))
     }
 
     return (
-        // @ts-ignore
         <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
             <MantineProvider
                 theme={{
+                    colorScheme,
                     fontFamily: 'Open Sans, sans serif',
                     spacing: { xs: 15, sm: 20, md: 25, lg: 30, xl: 40 },
                     breakpoints: {
                         xs: 500,
                         sm: 800,
                         md: 1000,
-                        lg: 1200,
-                        xl: 1950,
+                        lg: 1400,
+                        xl: 1900,
                     },
                 }}>
                 <Router>

@@ -24,10 +24,15 @@ export const Shop = observer(() => {
     return (
         <Container>
             <LoadingOverlay visible={isFetching || storeRecipes.isFetching}/>
+            <Space h="md" />
+            <Center>
+                <Title order={2}> Menu </Title>
+            </Center>
+            <Space h="md" />
             <Grid gutter="sm">
                 {pizzaList && (
                     pizzaList.map((pizza: Pizza) =>
-                        <Col key={pizza.id} span={12} xs={6}  md={6} lg={4} xl={3}>
+                        <Col key={pizza.id} span={12} xs={6}  md={4} lg={4} xl={3}>
                             <PizzaCard pizza={pizza} onAddCart={addInCart}/>
                         </Col>
                     ))
@@ -41,12 +46,13 @@ export const Shop = observer(() => {
             <Grid gutter={"sm"}>
                 {currRecipes && (
                     currRecipes.map((recipe: Recipe) =>
-                        <Col key={recipe.id} span={12} xs={6}  md={6} lg={4} xl={3}>
+                        <Col key={recipe.id} span={12} xs={6}  md={4} lg={4} xl={3}>
                             <RecipeCard recipe={recipe}/>
                         </Col>
                     ))
                 }
             </Grid>
+            <Space h="md" />
             <Center>
             <Pagination page={currentPage}
                         onChange={setCurrentPage}
