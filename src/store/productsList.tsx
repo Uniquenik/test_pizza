@@ -37,11 +37,11 @@ const ProductsList = (pizzaList:Pizza[] = []) => {
     const store = {
         isFetching: true,
         pizzaList: pizzaList,
-        applyFilter(address: string){
+        /*applyFilter(address: string){
             action(() => {
 
             })
-        },
+        },*/
         pizzaById (id:number) {
             let pizzaExistInList = store.pizzaList.findIndex(pizzaItem => pizzaItem.id === id);
             if (pizzaExistInList !== -1) {

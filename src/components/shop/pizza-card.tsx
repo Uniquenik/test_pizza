@@ -15,7 +15,10 @@ export const PizzaCard = memo((props: {
     return (
         <Card shadow="sm" padding="lg" style={{height: "100%", marginBottom:theme.spacing.sm}}>
             <Card.Section style={{marginBottom:theme.spacing.sm}}>
-                <Image src={ props.pizza.imageLink } height={ 150 } fit={"contain"} alt={ props.pizza.name } withPlaceholder/>
+                <Image src={ props.pizza.imageLink } height={ 150 } fit={"contain"} alt={ props.pizza.name }
+                       withPlaceholder
+                       placeholder={<Text align="center">Pls, wait...</Text>}
+                />
             </Card.Section>
             <Group position="apart">
                 <Text weight={ 500 }>{ props.pizza.name }</Text>

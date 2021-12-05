@@ -36,28 +36,37 @@ const RecipesList = () => {
         total: 0,
         currentPage:1,
         setCurrentPage (page: number) {
-            store.currRecipes = store.recipes.slice(inPage*(page-1), inPage * page)
+            store.currRecipes = store.recipes.slice(inPage * (page - 1), inPage * page)
             store.currentPage = page
-        }
-        /*changeFilter (str: string){
+        },
+        filterValue: 'american',
+        filterOptions: [
+                { label: 'American', value: 'american' },
+                { label: 'British', value: 'british' },
+                { label: 'Soviet Russian', value: 'russian' },
+                { label: 'China', value: 'chinese' },
+        ],
+        changeFilter (value: string){
             store.currentPage = 1
-        }*/
+            store.isFetching = true
+            getRecipes(`filter.php?a=${value}`)
+                .then((resp) => {
+                        store.recipes = resp
+                        let totalPage =  Math.floor(store.recipes.length/inPage)
+                        store.total = totalPage
+                        store.currRecipes = resp.slice(0,inPage)
+                        store.isFetching = false
+                        store.filterValue = value
+                    }
+                )
+                .catch((err) => console.log(err))
+            console.log(store.recipes)
+        }
 
     }
 
     runInAction(() => {
-        store.isFetching = true
-        getRecipes("filter.php?a=american")
-            .then((resp) => {
-                    store.recipes = resp
-                    let totalPage =  Math.floor(store.recipes.length/inPage)
-                    store.total = totalPage
-                    store.currRecipes = resp.slice(0,inPage)
-                    store.isFetching = false
-                }
-            )
-            .catch((err) => console.log(err))
-        console.log(store.recipes)
+        store.changeFilter(store.filterValue)
     })
 
     return makeAutoObservable(store)
