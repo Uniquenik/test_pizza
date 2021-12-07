@@ -1,7 +1,6 @@
 import {$api} from "./api";
 import {Pizza} from "../components/data-types";
-import {action, makeAutoObservable, runInAction} from "mobx";
-
+import {makeAutoObservable, runInAction} from "mobx";
 
 export async function getPizzas(address: string):Promise<Pizza[]> {
     let pizzas: Pizza[] = []
@@ -32,26 +31,12 @@ export async function getPizzas(address: string):Promise<Pizza[]> {
     return await fetchPizza(address)
 }
 
-const ProductsList = (pizzaList:Pizza[] = []) => {
 
+const ProductsList = (pizzaList:Pizza[] = []) => {
     const store = {
         isFetching: true,
         pizzaList: pizzaList,
-        /*applyFilter(address: string){
-            action(() => {
-
-            })
-        },*/
-        pizzaById (id:number) {
-            let pizzaExistInList = store.pizzaList.findIndex(pizzaItem => pizzaItem.id === id);
-            if (pizzaExistInList !== -1) {
-                return pizzaList[pizzaExistInList]
-            }
-            else return null
-        }
     }
-
-
 
     runInAction(() => {
         getPizzas("")

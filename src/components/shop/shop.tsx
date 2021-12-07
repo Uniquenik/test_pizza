@@ -18,22 +18,14 @@ import {storeProducts} from "../../store/productsList";
 import {storeCart} from "../../store/productsCart";
 import {Recipe, storeRecipes} from "../../store/recipesList";
 import {RecipeCard} from "./recipe-card";
-import {usePagination} from "@mantine/hooks";
 
 export const Shop = observer(() => {
     const {isFetching, pizzaList} = storeProducts
     const {addInCart} = storeCart
     const {currRecipes, total, setCurrentPage, currentPage, filterOptions, filterValue, changeFilter} = storeRecipes
-    /*const pagination = usePagination({
-        total: total,
-        siblings: 1,
-        initialPage:1,
-        onChange: setCurrentPage
-    });*/
 
     return (
-        <Container>
-            {/*<LoadingOverlay visible={isFetching || storeRecipes.isFetching}/>*/}
+        <Container padding={0}>
             <Space h="md" />
             <Center>
                 <Title order={2}> Menu </Title>
@@ -49,7 +41,6 @@ export const Shop = observer(() => {
                         ))
                     }
                 </Grid> || <Skeleton height={200} mt={6} radius="xl" />
-
             }
             <Space h="xl" />
             <Center>
@@ -76,11 +67,11 @@ export const Shop = observer(() => {
                     </Grid>
                     <Space h="md" />
                     <Center>
-                    <Pagination page={currentPage}
-                    onChange={setCurrentPage}
-                    total={total}
-                    radius={"xl"}
-                    siblings={1}/>
+                        <Pagination page={currentPage}
+                        onChange={setCurrentPage}
+                        total={total}
+                        radius={"xl"}
+                        siblings={1}/>
                     </Center>
                 </div>
                 || <Skeleton height={200} mt={6} radius="xl" />

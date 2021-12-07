@@ -4,13 +4,13 @@ import {
     Navbar,
     Burger,
     Header,
-    SegmentedControl,
+    MediaQuery,
     ActionIcon,
     useMantineColorScheme,
     Group,
     Divider,
     Text,
-    Tabs, UnstyledButton
+    Drawer, UnstyledButton
 } from "@mantine/core";
 import {Link} from "react-router-dom";
 import {useOpenCart} from "../hooks/useOpenCart";
@@ -19,18 +19,17 @@ import {ArchiveIcon, SunIcon, MoonIcon} from "@radix-ui/react-icons";
 
 export const MainLayout: FC = ({ children }) => {
     const {isOpenCart, SetOpenCart, GetValues} = useOpenCart()
+    const [isOpenLeftMenu, setIsOpenLeftMenu] = useState(false)
 
     const { colorScheme, toggleColorScheme } = useMantineColorScheme();
     const dark = colorScheme === 'dark';
-
-    const [typeOrder, setTypeOrder] = useState("delivery")
 
     return (
             <AppShell
                 padding="xs"
                 fixed = {isOpenCart}
                 zIndex={10}
-                //navbarOffsetBreakpoint = "xs"
+                // navbarOffsetBreakpoint = "xs"
                 // fixed prop on AppShell will be automatically added to Header and Navbar
                 navbar={
                     <Navbar
@@ -43,19 +42,6 @@ export const MainLayout: FC = ({ children }) => {
                         hidden={!isOpenCart}
                         width={{lg: 450}}
                     >
-                        <Navbar.Section>
-                            <SegmentedControl
-                                fullWidth
-                                size={"md"}
-                                value={typeOrder}
-                                onChange={setTypeOrder}
-                                data={[
-                                    { label: 'Delivery', value: 'delivery' },
-                                    { label: 'In restaurant', value: 'restaurant' },
-                                    { label: 'Pre-order in restaurant', value: 'pre-order' },
-                                ]}
-                            />
-                        </Navbar.Section>
                         <Navbar.Section>
                             <Cart/>
                         </Navbar.Section>
@@ -84,23 +70,55 @@ export const MainLayout: FC = ({ children }) => {
                                     )}
                                 </ActionIcon>
                                 <Divider orientation="vertical" mx="xs" />
-                                <Group>
-                                    <Link to={"/"}>
-                                        <UnstyledButton>
-                                            <Text>Home</Text>
-                                        </UnstyledButton>
-                                    </Link>
-                                    <Link to={"/shop"}>
-                                        <UnstyledButton>
+                                <MediaQuery largerThan={"xs"} styles={{display:"none"}}>
+                                    <Group>
+                                        <Link to={"/"}>
+                                            <UnstyledButton>
+                                                <Text>Home</Text>
+                                            </UnstyledButton>
+                                        </Link>
+                                        <Link to={"/shop"}>
+                                            <UnstyledButton>
+                                                    <Text>Shop</Text>
+                                            </UnstyledButton>
+                                        </Link>
+                                        <Link to={"/"}>
+                                            <UnstyledButton>
+                                                <Text>Random</Text>
+                                            </UnstyledButton>
+                                        </Link>
+                                    </Group>
+                                </MediaQuery>
+                                <MediaQuery smallerThan={"xs"} styles={{display:"none"}}>
+                                    <UnstyledButton onClick={() => setIsOpenLeftMenu(true)}>
+                                        <Text>All links</Text>
+                                    </UnstyledButton>
+                                </MediaQuery>
+                                <Drawer
+                                    opened={isOpenLeftMenu}
+                                    onClose={() => setIsOpenLeftMenu(false)}
+                                    title="Menu"
+                                    padding="md"
+                                    size="xs"
+                                >
+                                    <Group direction={"column"}>
+                                        <Link to={"/"}>
+                                            <UnstyledButton>
+                                                <Text>Home</Text>
+                                            </UnstyledButton>
+                                        </Link>
+                                        <Link to={"/shop"}>
+                                            <UnstyledButton>
                                                 <Text>Shop</Text>
-                                        </UnstyledButton>
-                                    </Link>
-                                    <Link to={"/"}>
-                                        <UnstyledButton>
-                                            <Text>Random</Text>
-                                        </UnstyledButton>
-                                    </Link>
-                                </Group>
+                                            </UnstyledButton>
+                                        </Link>
+                                        <Link to={"/"}>
+                                            <UnstyledButton>
+                                                <Text>Random</Text>
+                                            </UnstyledButton>
+                                        </Link>
+                                    </Group>
+                                </Drawer>
                             </Group>
                         </Header>
                 }

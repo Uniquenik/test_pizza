@@ -52,6 +52,7 @@ const ProductsCart = (cartItems: Array<cardItemsID> = cartItemsIdInitState) => {
                 }
                 store.totalPrice -= pizza.price
             }
+            localStorage.setItem("cart", JSON.stringify(store.cartItemsProducts))
         },
         clearCart() {
             store.cartItemsProducts = []
@@ -70,6 +71,7 @@ const ProductsCart = (cartItems: Array<cardItemsID> = cartItemsIdInitState) => {
         }
         store.isFetching = false
     })
+
     return makeAutoObservable(store)
 }
 

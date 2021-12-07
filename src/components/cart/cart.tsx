@@ -1,9 +1,21 @@
 import {observer} from "mobx-react-lite";
 import {storeCart} from "../../store/productsCart";
-import {Card, Text, LoadingOverlay, Center, ActionIcon, Title, Table, Group, Space} from "@mantine/core";
-import React from "react";
+import {
+    Card,
+    Text,
+    LoadingOverlay,
+    Center,
+    ActionIcon,
+    Title,
+    Table,
+    Group,
+    Space,
+    SegmentedControl
+} from "@mantine/core";
+import React, {useState} from "react";
 import {CartCard} from "./cart-card";
 import {TrashIcon} from "@radix-ui/react-icons";
+import {useMediaQuery} from "@mantine/hooks";
 
 const ths = (
     <tr>
@@ -17,7 +29,9 @@ const ths = (
 
 export const Cart = observer(() => {
     const {isFetching, cartItemsProducts, totalPrice, addInCart, deleteInCart, clearCart} = storeCart
-    console.log(cartItemsProducts)
+    const largeScreen = useMediaQuery('(min-width: 720px)');
+    const [typeOrder, setTypeOrder] = useState("delivery")
+
     return (
         <div>
             <LoadingOverlay visible={isFetching}/>
@@ -25,6 +39,18 @@ export const Cart = observer(() => {
             <Center>
                 <Title order={2}> Cart </Title>
             </Center>
+            <Space h="md" />
+            <SegmentedControl
+                fullWidth
+                size={ largeScreen ? "md" : "xs"}
+                value={typeOrder}
+                onChange={setTypeOrder}
+                data={[
+                    { label: 'Delivery', value: 'delivery' },
+                    { label: 'In restaurant', value: 'restaurant' },
+                    { label: 'Pre-order in restaurant', value: 'pre-order' },
+                ]}
+            />
             <Space h="md" />
             <Table striped>
                 <thead>{ths}</thead>

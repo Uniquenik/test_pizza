@@ -34,7 +34,7 @@ const RecipesList = () => {
         recipes: RecipesInitState,
         currRecipes: RecipesInitState,
         total: 0,
-        currentPage:1,
+        currentPage: 1,
         setCurrentPage (page: number) {
             store.currRecipes = store.recipes.slice(inPage * (page - 1), inPage * page)
             store.currentPage = page
@@ -46,7 +46,7 @@ const RecipesList = () => {
                 { label: 'Soviet Russian', value: 'russian' },
                 { label: 'China', value: 'chinese' },
         ],
-        changeFilter (value: string){
+        changeFilter (value: string) {
             store.currentPage = 1
             store.isFetching = true
             getRecipes(`filter.php?a=${value}`)
@@ -62,7 +62,6 @@ const RecipesList = () => {
                 .catch((err) => console.log(err))
             console.log(store.recipes)
         }
-
     }
 
     runInAction(() => {
@@ -70,7 +69,6 @@ const RecipesList = () => {
     })
 
     return makeAutoObservable(store)
-
 }
 
 

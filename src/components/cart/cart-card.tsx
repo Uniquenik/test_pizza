@@ -15,7 +15,7 @@ export const CartCard = (props:{
           <td>
               <Group spacing={"xs"}>
                   <ActionIcon size={"xs"} variant="filled" radius={"md"} onClick={()=> {props.onRemove(props.pizza)}}>
-                  <MinusIcon/>
+                      <MinusIcon/>
                   </ActionIcon>
                   <Text>{props.amount} </Text>
                   <ActionIcon size={"xs"} variant="filled" radius={"md"} onClick={()=> {props.onAdd(props.pizza)}}>
